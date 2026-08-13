@@ -1,0 +1,86 @@
+name: Tests & Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linter
+      run: npm run lint
+
+    - name: Run tests
+      run: npm test -- --coverage
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./coverage/coverage-final.json
+        flags: unittests
+        name: codecov-umbrella
+
+    - name: Build application
+      run: npm run build
+
+    - name: Check build output
+      run: |
+        if [ -d ".next" ]; then
+          echo "✅ Build successful: .next directory created"
+          du -sh .next
+        else
+          echo "❌ Build failed: .next directory not found"
+          exit 1
+        fi
+
+  deploy-check:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build for production
+      run: npm run build
+
+    - name: Verify production build
+      run: |
+        echo "✅ Production build ready for deployment"
+        echo "Build artifacts:"
+        ls -la .next/
+
+    - name: Create deployment summary
+      run: |
+        echo "# Deployment Ready ✅" >> $GITHUB_STEP_SUMMARY
+        echo "Branch: main" >> $GITHUB_STEP_SUMMARY
+        echo "Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "Status: Ready for production" >> $GITHUB_STEP_SUMMARY
