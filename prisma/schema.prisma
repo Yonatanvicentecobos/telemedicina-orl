@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite no soporta enums nativos en Prisma; se restringen en la capa de app (src/lib/types.ts)
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      String   @default("PATIENT")
+  createdAt DateTime @default(now())
+
+  appointmentsAsPatient Appointment[] @relation("PatientAppointments")
+  appointmentsAsDoctor  Appointment[] @relation("DoctorAppointments")
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  doctorId    String
+  scheduledAt DateTime
+  status      String   @default("SCHEDULED")
+  reason      String?
+  roomUrl     String?
+  createdAt   DateTime @default(now())
+
+  patient User @relation("PatientAppointments", fields: [patientId], references: [id])
+  doctor  User @relation("DoctorAppointments", fields: [doctorId], references: [id])
+
+  @@index([doctorId, scheduledAt])
+}
