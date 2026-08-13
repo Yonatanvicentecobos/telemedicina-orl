@@ -142,7 +142,7 @@ Lines        : 85% | 44/52
 4. [x] Crear mocks de Prisma (src/__tests__/setup.ts)
 5. [x] Escribir tests de API (route.test.ts, id.test.ts)
 6. [x] Escribir tests de componentes (BookingForm.test.tsx, AppointmentCard.test.tsx)
-7. [ ] Escribir tests de integración (booking-flow.test.ts)
+7. [x] Escribir tests de integración (booking-flow.test.ts)
 8. [ ] Ejecutar tests y medir cobertura
 9. [ ] Agregar CI/CD para tests
 
