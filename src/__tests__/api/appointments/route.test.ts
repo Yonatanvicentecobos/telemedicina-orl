@@ -95,12 +95,12 @@ describe("POST /api/appointments", () => {
       { patientName: "Test", patientEmail: "test@test.com" }, // Missing date
     ];
 
-    invalidPayloads.forEach((payload) => {
+    invalidPayloads.forEach((payload: any) => {
       const hasRequired =
         payload.patientName &&
         payload.patientEmail &&
         payload.scheduledAt;
-      expect(hasRequired).toBe(false);
+      expect(hasRequired).toBeFalsy();
     });
   });
 
