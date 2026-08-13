@@ -1,0 +1,84 @@
+{
+  "name": "telemedicina-orl",
+  "title": "Telemedicina ORL",
+  "description": "Production-ready PWA for online medical consultations with video conferencing, appointment booking, and comprehensive testing infrastructure.",
+  "version": "0.1.0",
+  "author": "Yonatán Vicente Cobos",
+  "license": "MIT",
+  "repository": "https://github.com/Yonatanvicentecobos/telemedicina-orl",
+  "keywords": [
+    "telemedicine",
+    "otolaryngology",
+    "video-consultation",
+    "medical-app",
+    "pwa",
+    "next.js",
+    "typescript",
+    "testing"
+  ],
+  "topics": [
+    "healthcare",
+    "telemedicine",
+    "pwa",
+    "next.js",
+    "typescript",
+    "jest",
+    "github-actions"
+  ],
+  "stacks": {
+    "frontend": [
+      "Next.js 14",
+      "TypeScript",
+      "React",
+      "Tailwind CSS"
+    ],
+    "backend": [
+      "Node.js",
+      "Prisma ORM",
+      "SQLite"
+    ],
+    "testing": [
+      "Jest",
+      "Testing Library",
+      "47 test cases"
+    ],
+    "deployment": [
+      "GitHub Actions",
+      "Vercel-ready",
+      "Docker"
+    ]
+  },
+  "sections": {
+    "overview": "Quick start, technology stack, and project status",
+    "architecture": "Database schema, validation layer, and testing infrastructure",
+    "features": "Booking system, component API, and API routes",
+    "testing": "Test structure, mocking strategy, and coverage metrics",
+    "cicd": "GitHub Actions workflows and deployment secrets",
+    "development": "Feature workflow, local testing, and troubleshooting",
+    "deployment": "Vercel, Docker, and manual deployment options"
+  },
+  "quick_reference": {
+    "setup": [
+      "npm install",
+      "npm run prisma:migrate",
+      "npm run dev"
+    ],
+    "testing": [
+      "npm test",
+      "npm run test:watch",
+      "npm run test:coverage"
+    ],
+    "deployment": [
+      "npm run build",
+      "npm start"
+    ]
+  },
+  "stats": {
+    "tests": 47,
+    "test_suites": 5,
+    "coverage_components": "74%",
+    "coverage_setup": "100%",
+    "commits": 4,
+    "production_ready": true
+  }
+}
